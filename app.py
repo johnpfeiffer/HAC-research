@@ -12,6 +12,7 @@ from components.progress import render_progress
 from components.dashboard import render_dashboard
 from components.trial_table import render_trial_table
 from components.chat_panel import render_chat_panel
+from components.competitive import render_competitive
 from services.supabase_client import (
     get_client,
     create_session,
@@ -61,6 +62,22 @@ def run_pipeline(search_params: dict, session_id: str, status_container):
         analyzed_count = 0
         total_trials = 0
         result = None
+        log_lines = []
+
+        # Scrollable log container inside the status widget
+        status_container.update(label="Starting pipeline...", state="running")
+        log_area = status_container.empty()
+
+        def _append_log(line: str):
+            log_lines.append(line)
+            # Render all lines in a scrollable container
+            log_text = "\n".join(log_lines)
+            log_area.markdown(
+                f'<div style="height:400px;overflow-y:auto;background:#0e1117;'
+                f'padding:12px;border-radius:8px;font-family:monospace;font-size:13px;'
+                f'color:#fafafa;white-space:pre-wrap;">{log_text}</div>',
+                unsafe_allow_html=True,
+            )
 
         async for event in pipeline.astream_events(initial_state, version="v2"):
             kind = event.get("event", "")
@@ -68,37 +85,37 @@ def run_pipeline(search_params: dict, session_id: str, status_container):
 
             if kind == "on_chain_start" and name == "fetch_trials":
                 status_container.update(label="Fetching trials from ClinicalTrials.gov...", state="running")
+                _append_log("[FETCH] Querying ClinicalTrials.gov API...")
 
             elif kind == "on_chain_end" and name == "fetch_trials":
                 output = event.get("data", {}).get("output", {})
                 raw = output.get("raw_trials", [])
                 total_trials = len(raw)
                 if total_trials == 0:
-                    status_container.write("No trials found for this query.")
+                    _append_log("[FETCH] No trials found.")
                 else:
-                    status_container.write(f"Fetched **{total_trials}** trials from ClinicalTrials.gov")
+                    _append_log(f"[FETCH] Retrieved {total_trials} trials")
                     status_container.update(label=f"Analyzing {total_trials} trials with AI...", state="running")
 
             elif kind == "on_chain_end" and name == "analyze_trial":
                 analyzed_count += 1
                 output = event.get("data", {}).get("output", {})
-                insights = output.get("insights", [])
+                insights_list = output.get("insights", [])
                 signal = "N/A"
                 drugs = "N/A"
-                if insights:
-                    ins = insights[0]
+                if insights_list:
+                    ins = insights_list[0]
                     signal = ins.get("investment_signal", "N/A")
                     drugs = ", ".join(ins.get("drug_names") or []) or "N/A"
                 status_container.update(
                     label=f"Analyzing trials... ({analyzed_count}/{total_trials})",
                     state="running",
                 )
-                status_container.write(
-                    f"Trial {analyzed_count}/{total_trials} — Signal: **{signal}** | Drugs: {drugs}"
-                )
+                _append_log(f"[{analyzed_count}/{total_trials}] Signal: {signal} | Drugs: {drugs}")
 
             elif kind == "on_chain_start" and name == "aggregate_results":
                 status_container.update(label="Aggregating results...", state="running")
+                _append_log("[AGGREGATE] Computing stats and grouping mechanisms...")
 
             elif kind == "on_chain_end" and name == "aggregate_results":
                 output = event.get("data", {}).get("output", {})
@@ -106,13 +123,10 @@ def run_pipeline(search_params: dict, session_id: str, status_container):
                 pos = agg.get("positive_signals", 0)
                 neg = agg.get("negative_signals", 0)
                 neu = agg.get("neutral_signals", 0)
-                status_container.write(
-                    f"Done! Signals: **{pos}** positive, **{neu}** neutral, **{neg}** negative"
-                )
+                _append_log(f"[DONE] {pos} positive, {neu} neutral, {neg} negative signals")
                 status_container.update(label="Analysis complete!", state="complete")
                 result = output
 
-        # If stream ended without aggregate (e.g. 0 trials), get final state
         if result is None:
             result = {"aggregate": {}}
         return result
@@ -163,10 +177,15 @@ if session_id and st.session_state["pipeline_complete"]:
     insights = get_insights(sb, session_id)
     aggregate = st.session_state["aggregate"]
 
-    tab_dashboard, tab_trials, tab_chat = st.tabs(["Dashboard", "Trial Details", "Chat"])
+    tab_dashboard, tab_competitive, tab_trials, tab_chat = st.tabs(
+        ["Overview", "Competitive Dynamics", "Trial Details", "Chat"]
+    )
 
     with tab_dashboard:
         render_dashboard(aggregate, trials, insights)
+
+    with tab_competitive:
+        render_competitive(aggregate, trials, insights)
 
     with tab_trials:
         render_trial_table(trials, insights)

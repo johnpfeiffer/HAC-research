@@ -109,6 +109,7 @@ async def analyze_trial(state: TrialState) -> dict:
         "investment_signal": str,
         "investment_rationale": str,
         "competitive_notes": str,
+        "patient_population": str,
     }
 
     def _safe_int(v):
@@ -157,7 +158,7 @@ async def analyze_trial(state: TrialState) -> dict:
 
 
 async def aggregate_results(state: OverallState) -> dict:
-    """Compute aggregate stats and mark session complete."""
+    """Compute aggregate stats, group MOAs via LLM, and mark session complete."""
     sb = get_client()
     session_id = state["search_session_id"]
 
@@ -166,6 +167,36 @@ async def aggregate_results(state: OverallState) -> dict:
     insights = get_insights(sb, session_id)
 
     agg = aggregate_insights(insights, trials)
+
+    # Group MOAs into 5-6 categories via LLM
+    raw_moas = agg.get("raw_moas", [])
+    if raw_moas:
+        try:
+            llm = get_llm(temperature=0)
+            moa_list = "\n".join(f"- {m}" for m in set(raw_moas))
+            prompt = (
+                "Below is a list of mechanisms of action from clinical trials. "
+                "Group them into exactly 5-6 broad therapeutic categories. "
+                "For each category, provide a short name and list which MOAs belong to it.\n\n"
+                "Return ONLY valid JSON in this exact format, no other text:\n"
+                '[{"group": "Category Name", "moas": ["moa1", "moa2"], "count": 5}]\n\n'
+                "Where count is the total number of trials using MOAs in that group.\n\n"
+                f"MOA list:\n{moa_list}\n\n"
+                "MOA frequency:\n"
+                + "\n".join(f"- {m['mechanism']}: {m['count']} trials" for m in agg.get("moa_clusters", []))
+            )
+            response = await llm.ainvoke([{"role": "user", "content": prompt}])
+            import json as _json
+            text = response.content.strip()
+            # Strip markdown code fences if present
+            if text.startswith("```"):
+                text = text.split("\n", 1)[1] if "\n" in text else text[3:]
+                text = text.rsplit("```", 1)[0]
+            moa_groups = _json.loads(text.strip())
+            agg["moa_groups"] = moa_groups
+        except Exception:
+            # Fall back to ungrouped if LLM fails
+            pass
 
     update_session(sb, session_id, status="COMPLETED")
 

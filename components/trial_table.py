@@ -1,7 +1,31 @@
-"""Sortable and filterable trial list component."""
+"""Sortable and filterable trial list component with patient info and KOLs."""
 
 import streamlit as st
 import pandas as pd
+
+
+def _extract_investigators(raw_json: dict) -> list[dict]:
+    """Extract investigators from trial raw JSON."""
+    protocol = raw_json.get("protocolSection", {})
+    contacts = protocol.get("contactsLocationsModule", {})
+    officials = contacts.get("overallOfficials", [])
+    return [
+        {"name": o.get("name", ""), "role": o.get("role", ""), "affiliation": o.get("affiliation", "")}
+        for o in officials
+    ]
+
+
+def _extract_eligibility(raw_json: dict) -> dict:
+    """Extract eligibility info from trial raw JSON."""
+    protocol = raw_json.get("protocolSection", {})
+    elig = protocol.get("eligibilityModule", {})
+    return {
+        "criteria": elig.get("eligibilityCriteria", ""),
+        "sex": elig.get("sex", "ALL"),
+        "min_age": elig.get("minimumAge", "N/A"),
+        "max_age": elig.get("maximumAge", "N/A"),
+        "healthy_volunteers": elig.get("healthyVolunteers", False),
+    }
 
 
 def render_trial_table(trials: list[dict], insights: list[dict]):
@@ -81,18 +105,51 @@ def render_trial_table(trials: list[dict], insights: list[dict]):
         if not matching_trial:
             continue
         ins = insight_map.get(matching_trial["id"], {})
-        if not ins:
-            continue
 
-        with st.expander(f"{nct_id} — {row['Title'][:60]}..."):
-            col1, col2 = st.columns(2)
-            with col1:
-                st.markdown(f"**Signal:** {ins.get('investment_signal', 'N/A')}")
-                st.markdown(f"**Drugs:** {', '.join(ins.get('drug_names') or [])}")
-                st.markdown(f"**Mechanism:** {ins.get('mechanism_of_action', 'N/A')}")
-                st.markdown(f"**Efficacy:** {ins.get('efficacy_summary', 'N/A')}")
-            with col2:
-                st.markdown(f"**Safety:** {ins.get('safety_summary', 'N/A')}")
-                st.markdown(f"**Rationale:** {ins.get('investment_rationale', 'N/A')}")
-                st.markdown(f"**Competitive:** {ins.get('competitive_notes', 'N/A')}")
-                st.markdown(f"**Serious AEs:** {ins.get('serious_ae_count', 0)}")
+        with st.expander(f"{nct_id} — {row['Title'][:60]}"):
+            # --- Investment Analysis ---
+            st.markdown("#### Investment Analysis")
+            ic1, ic2 = st.columns(2)
+            with ic1:
+                signal = ins.get("investment_signal", "N/A") if ins else "N/A"
+                signal_colors = {"POSITIVE": "green", "NEGATIVE": "red", "NEUTRAL": "orange", "INSUFFICIENT_DATA": "gray"}
+                color = signal_colors.get(signal, "gray")
+                st.markdown(f"**Signal:** :{color}[{signal}]")
+                st.markdown(f"**Drugs:** {', '.join(ins.get('drug_names') or []) if ins else 'N/A'}")
+                st.markdown(f"**Mechanism:** {ins.get('mechanism_of_action', 'N/A') if ins else 'N/A'}")
+                st.markdown(f"**Efficacy:** {ins.get('efficacy_summary', 'N/A') if ins else 'N/A'}")
+            with ic2:
+                st.markdown(f"**Safety:** {ins.get('safety_summary', 'N/A') if ins else 'N/A'}")
+                st.markdown(f"**Rationale:** {ins.get('investment_rationale', 'N/A') if ins else 'N/A'}")
+                st.markdown(f"**Competitive:** {ins.get('competitive_notes', 'N/A') if ins else 'N/A'}")
+                st.markdown(f"**Serious AEs:** {ins.get('serious_ae_count', 0) if ins else 0}")
+
+            # --- Patient Population ---
+            st.markdown("#### Patient Population")
+            raw_json = matching_trial.get("raw_json", {})
+            elig = _extract_eligibility(raw_json)
+            patient_pop = ins.get("patient_population", "") if ins else ""
+
+            pc1, pc2 = st.columns(2)
+            with pc1:
+                if patient_pop:
+                    st.markdown(f"**AI Summary:** {patient_pop}")
+                st.markdown(f"**Sex:** {elig['sex']}  |  **Age:** {elig['min_age']} — {elig['max_age']}")
+                st.markdown(f"**Healthy Volunteers:** {'Yes' if elig['healthy_volunteers'] else 'No'}")
+            with pc2:
+                criteria_text = elig["criteria"]
+                if criteria_text:
+                    # Show first 500 chars with option to see full
+                    if len(criteria_text) > 500:
+                        st.text_area("Eligibility Criteria", criteria_text, height=150, disabled=True, key=f"elig_{nct_id}")
+                    else:
+                        st.markdown(f"**Criteria:** {criteria_text}")
+
+            # --- Key Opinion Leaders / Investigators ---
+            investigators = _extract_investigators(raw_json)
+            if investigators:
+                st.markdown("#### Key Investigators")
+                for inv in investigators:
+                    role_label = inv["role"].replace("_", " ").title() if inv["role"] else "Investigator"
+                    affil = f" — {inv['affiliation']}" if inv["affiliation"] else ""
+                    st.markdown(f"- **{inv['name']}** ({role_label}){affil}")

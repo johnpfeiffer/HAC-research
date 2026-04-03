@@ -74,6 +74,10 @@ class TrialInsight(BaseModel):
         default="",
         description="Notes on competitive landscape from trial context",
     )
+    patient_population: str = Field(
+        default="",
+        description="Target patient population: age range, disease stage, prior treatments, key inclusion criteria. 1-2 sentences.",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -92,6 +96,8 @@ Focus on:
 (mixed, early stage, inconclusive) / NEGATIVE (failed endpoints, safety concerns, \
 terminated) / INSUFFICIENT_DATA
 5. COMPETITIVE CONTEXT: Hints about competitive landscape from trial description
+6. PATIENT POPULATION: Summarize who this trial targets — age range, disease stage, \
+prior treatment requirements, key inclusion/exclusion criteria
 
 Be precise. Use only information present in the trial data. Do not speculate beyond what \
 the data supports."""
