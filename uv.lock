@@ -260,6 +260,7 @@ name = "clinical-trials-dashboard"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "exa-py" },
     { name = "httpx" },
     { name = "langchain-core" },
     { name = "langchain-openai" },
@@ -273,6 +274,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "exa-py", specifier = ">=1.0" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "langchain-core", specifier = ">=0.3" },
     { name = "langchain-openai", specifier = ">=0.2" },
@@ -371,6 +373,24 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/fc/f8/98eea607f65de6527f8a2e8885fc8015d3e6f5775df186e443e0964a11c3/distro-1.9.0.tar.gz", hash = "sha256:2fa77c6fd8940f116ee1d6b94a2f90b13b5ea8d019b98bc8bafdcabcdd9bdbed", size = 60722, upload-time = "2023-12-24T09:54:32.31Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl", hash = "sha256:7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2", size = 20277, upload-time = "2023-12-24T09:54:30.421Z" },
+]
+
+[[package]]
+name = "exa-py"
+version = "2.10.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "httpcore" },
+    { name = "httpx" },
+    { name = "openai" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "requests" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fe/4f/f06a6f277d668f143e330fe503b0027cc5fed753b22c3e161f8cbbccdf65/exa_py-2.10.2.tar.gz", hash = "sha256:f781f30b199f1102333384728adae64bb15a6bbcabfa97e91fd705f90acffc45", size = 53792, upload-time = "2026-03-26T20:29:35.764Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e2/bc/7a34e904a415040ba626948d0b0a36a08cd073f12b13342578a68331be3c/exa_py-2.10.2-py3-none-any.whl", hash = "sha256:ecb2a7581f4b7a8aeb6b434acce1bbc40f92ed1d4126b2aa6029913acd904a47", size = 72248, upload-time = "2026-03-26T20:29:37.306Z" },
 ]
 
 [[package]]
