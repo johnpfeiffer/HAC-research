@@ -1,0 +1,869 @@
+{
+  "totalCount": 3,
+  "studies": [
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT06775041",
+          "orgStudyIdInfo": {
+            "id": "PRG-PRO-005"
+          },
+          "organization": {
+            "fullName": "PRG Science & Technology Co., Ltd.",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "Study to Determine Optimal Dose and Evaluate Safety, Tolerability, and Pharmacokinetics of Progerinin in Patients With Hutchinson-Gilford Progeria Syndrome (HGPS)",
+          "officialTitle": "A Phase 2a, Randomized, Open-Label Study to Determine the Optimal Dose and Evaluate the Safety, Tolerability, and Pharmacokinetics of Progerinin in Patients With Hutchinson-Gilford Progeria Syndrome (HGPS)"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2026-01",
+          "overallStatus": "ACTIVE_NOT_RECRUITING",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2025-01-13",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2026-03",
+            "type": "ESTIMATED"
+          },
+          "completionDateStruct": {
+            "date": "2026-03",
+            "type": "ESTIMATED"
+          },
+          "studyFirstSubmitDate": "2024-12-11",
+          "studyFirstSubmitQcDate": "2025-01-09",
+          "studyFirstPostDateStruct": {
+            "date": "2025-01-14",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2026-02-05",
+          "lastUpdatePostDateStruct": {
+            "date": "2026-02-09",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "PRG Science & Technology Co., Ltd.",
+            "class": "INDUSTRY"
+          }
+        },
+        "oversightModule": {
+          "oversightHasDmc": true,
+          "isFdaRegulatedDrug": true,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "Researchers will compare treatment with progerinin plus lonafarnib vs lonafarnib alone to assess optimal dosing, safety, tolerability, and pharmacokinetics in patients with Hutchinson-Gilford Progeria Syndrome (HGPS). Subjects in the randomized study arms will continue to take the standard of care (SOC), lonafarnib, and will be randomized to either take SOC alone or in combination with progerinin.",
+          "detailedDescription": "During this trial, a total of 10 subjects will be randomized in a 4:1 ratio to receive treatment with progerinin plus lonafarnib vs lonafarnib alone. Dose escalation will occur through intra-subject dose titration. Two ascending doses of progerinin will be assessed. The dose levels proposed in this study were determined using body weight based on adult doses assessed in previously completed studies, and on a simulated population pharmacokinetic (PK) model. If systemic exposures of Progerinin in pediatric patients are lower than those in adults, a dose escalation may be added at the end of the study.\n\nProgerinin will be administered, with food. The study treatment is available in sachets of 250 mg or 350 mg and the doses in the study range from 500 to 1500 mg daily, dosed BID (twice a day).\n\nLonafarnib is considered as the standard of care (SOC) and all subjects in the randomized study arms will continue taking lonafarnib for the duration of the study. Subjects who are not already taking lonafarnib will also have the opportunity to initiate lonafarnib on this study as part of the lonafarnib na\u00efve arm (separate from the randomized study arms)."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Hutchinson-Gilford Progeria Syndrome"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE2"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "SEQUENTIAL",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "NONE"
+            }
+          },
+          "enrollmentInfo": {
+            "count": 10,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "Progerinin + Lonafarnib",
+              "type": "EXPERIMENTAL",
+              "description": "Subjects who have successfully completed the Screening phase will enter the treatment phase of the study and be randomized to a treatment arm. Subjects randomized to the progerinin + lonafarnib arm will take progerinin at a dose dependent on their body weight and will continue taking lonafarnib per the package insert.\n\nFor each dose cohort, subjects will complete a 28-day treatment period of toxicity assessment, and a minimum four-month treatment period for plasma progerin evaluation. After the last subject completes the toxicity assessment period, the independent Data Monitoring Committee (iDMC) will meet to confirm that subjects can be escalated to the next dose. All subjects will remain on the current dose until the iDMC decision is confirmed. Each subject will only be escalated to the next dose after their 4-month (\u00b12 weeks) plasma progerin sample is collected.",
+              "interventionNames": [
+                "Drug: Progerinin",
+                "Drug: Lonafarnib"
+              ]
+            },
+            {
+              "label": "Lonafarnib Na\u00efve",
+              "type": "OTHER",
+              "description": "Subjects with no prior treatment with lonafarnib (i.e., no commercial or managed access program source) may be enrolled to initiate treatment with lonafarnib monotherapy. These subjects will initiate lonafarnib therapy in preparation for an upcoming phase of the study following the completion of phase 2a. These subjects will be excluded from the analysis of this phase 2a study. They will come to the study site for a baseline visit and at one year for assessment as described later in this protocol.",
+              "interventionNames": [
+                "Drug: Lonafarnib"
+              ]
+            },
+            {
+              "label": "Lonafarnib",
+              "type": "ACTIVE_COMPARATOR",
+              "description": "Subjects in the main study arms (Progerinin + Lonafarnib and non-na\u00efve Lonafarnib) will continue taking lonafarnib per the package insert. Subjects randomized to the lonafarnib alone arm will not take progerinin during this study.",
+              "interventionNames": [
+                "Drug: Lonafarnib"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Progerinin",
+              "description": "Dosing will be determined based on body weight. Dosing ranges from 500mg to 1500mg daily. Progerinin is available in sachets of 250 mg or 350 mg for oral use.",
+              "armGroupLabels": [
+                "Progerinin + Lonafarnib"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "Lonafarnib",
+              "description": "Lonafarnib is considered as the standard of care (SOC). Subjects in the randomized arms will continue taking lonafarnib per the package insert. Subjects in the lonafarnib na\u00efve arm will initiate lonafarnib as per FDA-approved study 07-01-7505.",
+              "armGroupLabels": [
+                "Lonafarnib",
+                "Lonafarnib Na\u00efve",
+                "Progerinin + Lonafarnib"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Change from baseline in plasma progerin concentration",
+              "timeFrame": "Baseline and Month 4 of each cohort"
+            },
+            {
+              "measure": "Incidence of Dose Limiting Toxicities (DLTs)",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Incidence and severity of Treatment-Emergent Adverse Events (TEAEs)",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Incidence of withdrawals due to Adverse Events (AEs)",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Incidence of Treatment-Related Adverse Events",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Incidence of Serious Adverse Events (SAEs)",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change/shifts in laboratory values from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in blood pressure from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in heart rate from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in respiratory rate from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in temperature from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in Electrocardiogram (ECG) parameter, ventricular rate (beats per minute), from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in Electrocardiogram (ECG) parameter, PR interval (msec), from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in Electrocardiogram (ECG) parameter, QRS interval (msec), from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in Electrocardiogram (ECG) parameter, QT interval (msec), from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Change in Electrocardiogram (ECG) parameter, QTc interval (msec), from baseline",
+              "timeFrame": "From baseline to follow-up (approximately 13 months)"
+            },
+            {
+              "measure": "Maximum observed plasma drug concentration (Cmax)",
+              "timeFrame": "Baseline, and pre-dose (0 hr) and 2-5 hr post-dose at Month 4 of each cohort"
+            },
+            {
+              "measure": "Apparent terminal elimination half-life (t1/2)",
+              "timeFrame": "Baseline, and pre-dose (0 hr) and 2-5 hr post-dose at Month 4 of cohort1 & cohort 2"
+            },
+            {
+              "measure": "Time to maximum observed plasma drug concentration (Tmax)",
+              "timeFrame": "Baseline, and pre-dose (0 hr) and 2-5 hr post-dose at Month 4 of cohort1 & cohort 2"
+            },
+            {
+              "measure": "Area under the plasma drug concentration-time curve (AUC) from time 0 to the end of the dosing period (AUC0-\u03c4)",
+              "timeFrame": "Baseline, and pre-dose (0 hr) and 2-5 hr post-dose at Month 4 of cohort1 & cohort 2"
+            },
+            {
+              "measure": "Clearance (CL)",
+              "timeFrame": "Baseline, and pre-dose (0 hr) and 2-5 hr post-dose at Month 4 of cohort1 & cohort 2"
+            },
+            {
+              "measure": "Covariates: Age",
+              "timeFrame": "Baseline, and pre-dose (0 hr) and 2-5 hr post-dose at Month 4 of each cohort"
+            },
+            {
+              "measure": "Covariates: Body weight",
+              "timeFrame": "Baseline, and pre-dose (0 hr) and 2-5 hr post-dose at Month 4 of each cohort"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\nSubjects will be eligible for enrollment in the study only if they meet ALL the following criteria at time of Screening:\n\n1. Subjects \u2265 1 year of age and weight \u2265 17.6 lb (8 kg).\n2. Subject must have confirmatory mutational analysis showing the classic HGPS mutation (c. 1824 C\\>T), nonclassic HGPS, Zmpset24 gene mutation, or other LMNA mutation (all subjects will havedocumentation of genetic testing prior to enrollment). \\*Only subjects with progerin producing mutations will be eligible for randomization. Other PL are eligible to enroll as na\u00efve subjects (see note for criterion #5).\n3. Subject must display clinical signs of Progeria as per the clinical trial team.\n4. Subject must be willing and able to come to Boston for appropriate assessments and examinations.\n5. Subject must be taking lonafarnib for at least 4 months prior to enrollment and have no history of grade 3 or 4 side effects that can be probably or possibly attributed to lonafarnib for at least 2 months prior to enrollment.\n\n   Note: Subjects with no prior treatment (i.e., no commercial or managed access program source) with lonafarnib may be enrolled to initiate treatment with lonafarnib monotherapy. These subjects will initiate lonafarnib therapy in preparation for an upcoming phase of the study following the completion of phase 2a. These subjects will be excluded from the analysis of this phase 2a study. These subjects must be at least 12 months of age per lonafarnib package insert.\n6. Subjects must have had no recent fractures or major surgery (within four weeks).\n7. Subject must have adequate organ and marrow function as defined by the following parameters:\n\n   1. Blood: APC (ANC + bands + monocytes) \\>1,000/\u00b5L, platelets \\>75,000/\u00b5L (transfusion independent); hemoglobin \\>9 g/dL.\n   2. Renal: creatinine \u2264 1.5 times normal for age or Glomerular Filtration Rate (GFR) \\>70 mL/min/1.73m2.\n   3. Hepatic: bilirubin \u22641.5x upper limit of normal for age; Serum Glutamic Pyruvic Transaminase (SGPT) (Alanine Transaminase, \\[ALT\\]) \\< and Serum Glutamic-Oxaloacetic Transaminase (SGOT) (Aspartate Aminotransferase, \\[AST\\]) \u2264 2.5x normal range for age.\n8. The subject is willing to provide written informed assent form, when possible, to participate in the study after reading the informed assent form and the information provided and has had the opportunity to discuss the study with the investigator or designee. Additionally, the subject's legally authorized guardian (LAR) is willing to provide written informed consent.\n9. The subject is able to communicate satisfactorily with the investigator and to participate in, and comply with, the requirements of the study.\n10. The subject (or LAR) is able to understand the nature of the study and any potential hazards associated with participating in it.\n11. Negative pregnancy test for female subjects of childbearing potential and those who have not been surgically sterilized or who do not have verbal or laboratory confirmation of two years postmenopausal status. Women of childbearing potential (WOCBP) and Women of non-childbearing potential are eligible to participate. Women of childbearing potential should use an acceptable method of birth control and agree to continue to use this method for the duration of the study and for 90 days after taking the last dose of Progerinin.\n\nAcceptable methods of contraception include abstinence, female subject/partner's use of hormonal contraceptive (oral, implanted, or injected) in conjunction with a barrier method (WOCBP only) (e.g., diaphragm, cervical cap, male condom, and female condom and spermicidal foam, sponges, and film), female subject/partner's use of an intrauterine device (IUD), or if the female subject/partner is surgically sterile (e.g., bilateral tubal ligation, hysterectomy) or two years postmenopausal at time of screening. All male subjects/partners (excluding men who have been sterilized) must agree to consistently and correctly use a condom for the duration of the study and for 90 days after taking the study drug. In addition, subjects may not donate sperm for the duration of the study and for 90 days after taking study drug.\n\nExclusion Criteria:\n\nSubjects meeting ANY of the following criteria at time of Screening will be excluded from enrollment:\n\n1. Other than the drugs used in this protocol, other drugs targeted to treat Progeria are excluded. Drugs to treat symptoms of Progeria are permitted.\n2. Subjects are taking medications that significantly affect the metabolism of Progerinin.\n3. Subjects with an active bleeding diathesis or on oral anti-vitamin K medication (except low dose coumadin).\n4. Subjects who have any severe and/or uncontrolled medical conditions or other conditions that could affect their participation in the study such as:\n\n   1. known severely impaired lung function\n   2. active (acute or chronic) or uncontrolled severe infections.\n   3. liver disease such as cirrhosis, chronic active hepatitis or chronic persistent hepatitis.\n   4. history of hepatitis B or hepatitis C documented by history and confirmed by serology if positive for history.\n5. Other concurrent severe and/or uncontrolled medical disease that could compromise participation in the study (i.e., uncontrolled diabetes, uncontrolled hypertension, severe infection, severe malnutrition, chronic liver or renal disease, active upper GI tract ulceration).\n6. A known history of Human Immunodeficiency Virus (HIV) seropositivity or known immunodeficiency.\n7. Impairment of gastrointestinal function or gastrointestinal disease that may significantly alter the absorption of Progerinin (e.g., ulcerative disease, uncontrolled nausea, vomiting, diarrhea, malabsorption syndrome or small bowel resection). A nasogastric tube (NG tube) or gastric tube (G tube) is allowed.\n8. Subjects who have known or suspected hypersensitivity to any of the excipients included in the formulation should not be treated.\n9. Subjects who have used marijuana or other (Tetrahydrocannabinol) THC containing products either recreationally or for medical purposes within three months prior to entering the study.",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "minimumAge": "1 Year",
+          "stdAges": [
+            "CHILD",
+            "ADULT",
+            "OLDER_ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "Boston Children's Hospital",
+              "city": "Boston",
+              "state": "Massachusetts",
+              "zip": "02115",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 42.35843,
+                "lon": -71.05977
+              }
+            }
+          ]
+        },
+        "ipdSharingStatementModule": {
+          "ipdSharing": "NO"
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-04-03"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D011371",
+              "term": "Progeria"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D000083083",
+              "term": "Laminopathies"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D008661",
+              "term": "Metabolism, Inborn Errors"
+            },
+            {
+              "id": "D008659",
+              "term": "Metabolic Diseases"
+            },
+            {
+              "id": "D009750",
+              "term": "Nutritional and Metabolic Diseases"
+            }
+          ]
+        },
+        "interventionBrowseModule": {
+          "meshes": [
+            {
+              "id": "C115354",
+              "term": "lonafarnib"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT04512963",
+          "orgStudyIdInfo": {
+            "id": "PRG-PRO-001"
+          },
+          "organization": {
+            "fullName": "PRG Science & Technology Co., Ltd.",
+            "class": "INDUSTRY"
+          },
+          "briefTitle": "Phase I Study of Progerinin in Healthy Volunteers",
+          "officialTitle": "A Phase I, Randomized, Double-Blind, Placebo-Controlled, Single Ascending Dose (SAD) Study Including a Food Interaction Study, Followed by a Multiple Ascending Dose (MAD) Study to Evaluate the Safety, Tolerability, Pharmacokinetics and Pharmacodynamic Profile of Progerinin in Healthy Volunteers"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2021-09",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2020-08-24",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2021-07-27",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2021-07-27",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2020-08-06",
+          "studyFirstSubmitQcDate": "2020-08-11",
+          "studyFirstPostDateStruct": {
+            "date": "2020-08-14",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2021-09-15",
+          "lastUpdatePostDateStruct": {
+            "date": "2021-09-22",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "SPONSOR"
+          },
+          "leadSponsor": {
+            "name": "PRG Science & Technology Co., Ltd.",
+            "class": "INDUSTRY"
+          },
+          "collaborators": [
+            {
+              "name": "Amarex Clinical Research",
+              "class": "OTHER"
+            }
+          ]
+        },
+        "oversightModule": {
+          "isFdaRegulatedDrug": true,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "PRG-PRO-001 is a Phase I, Randomized, Double-blind, Placebo-Controlled, Single Ascending Dose (SAD) Study including a food interaction study, followed by a Multiple Ascending Dose (MAD) Study to Evaluate the Safety, Tolerability, Pharmacokinetics and Pharmacodynamic Profile of Progerinin in Healthy Volunteers. This is a first-in-human study. The study aims to determine the safety and tolerability of Progerinin after single and multiple doses in healthy volunteers and to evaluate the pharmacokinetics (PK) of Progerinin after single and multiple dose administrations in healthy volunteers.",
+          "detailedDescription": "PRG Science \\& Technology Co., Ltd. (PRG S\\&T) is developing Progerinin (SLC-D011) for the treatment of the rare aging diseases Hutchinson-Gilford Progeria Syndrome (HGPS) and Werner Syndrome (WS).\n\nProgerin, an abnormal splice variant of the inner nuclear membrane protein lamin A is implicated in the pathology of HGPS and WS. It is believed that the extremely strong binding between lamin A and progerin is responsible for the nuclear abnormality phenotype observed in HGPS. WS is caused by functional defect of WRN, RecQ4L DNA helicase and rapid accumulation of progerin in WRN deficient condition is thought to be the cause of premature aging in WS. PRG S\\&T has shown that Progerinin binds specifically to progerin reduces its expression in both HGPS and WS cells, Progerinin further prevents progerin-lamin A in HGPS cells. In a progeria mouse model (LmnaG609G/G609G), treatment with Progerinin via intraperitoneal (i.p) injection (20 mg/kg, twice per week) could increase the body weight and extend the life span of LmnaG609G/G609G mice up to 21 weeks. In the LmnaG609G/+ mouse model, improved morphology such as status of coat hair and body size, increased body weight and extended life span for about 16 weeks was noted following Progerinin treatment. In addition, Progerinin can suppress muscle weakness including the heart muscle. Safety pharmacology studies did not indicate any Progerinin-related effects on vital organs and systems including respiratory, cardiovascular and central nervous system.\n\nPrior to studies in the disease states, this study PRG-PRO-001, an initial first-in-human study, will be conducted in healthy volunteers to assess the safety, tolerability and pharmacokinetics of Progerinin. PRG-PRO-001 is a Phase I, Randomized, Double-blind, Placebo-Controlled, Single Ascending Dose (SAD) Study including a food interaction study, followed by a Multiple Ascending Dose (MAD) Study to Evaluate the Safety, Tolerability, Pharmacokinetics and Pharmacodynamic Profile of Progerinin in Healthy Volunteers. This is a first-in-human study. The study aims to determine the safety and tolerability of Progerinin after single and multiple doses in healthy volunteers and to evaluate the pharmacokinetics (PK) of Progerinin after single and multiple dose administrations in healthy volunteers. The estimated enrollment is around 56 healthy volunteers, with 40 subjects estimated for the SAD phase and 16 subjects for the MAD Phase at one site in the USA.\n\nExpanded Access Program is available. For more details, please use the link in the References Section below to access our company's main webpage on Expanded Access Program."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Hutchinson-Gilford Progeria Syndrome",
+            "Werner Syndrome"
+          ],
+          "keywords": [
+            "HGPS",
+            "WS",
+            "Progeria"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE1"
+          ],
+          "designInfo": {
+            "allocation": "RANDOMIZED",
+            "interventionModel": "SEQUENTIAL",
+            "interventionModelDescription": "SAD Phase including Food Interaction:\n\nThis is a randomized, double-blind, placebo-controlled, dose-escalating study in healthy volunteers. Participants will be assigned to 1 of up to 6 cohorts and will be randomized within each cohort to Progerinin or placebo at 3:1 ratio.\n\nFollowing the completion of the SAD phase, if study stopping criteria (SSC) is not met, then participants in cohort 5 and 6 will cross-over to the fed part of the study following a 7 day washout period. If SSC is achieved in the SAD phase, then the previous dose will be in the Food Interaction phase.\n\nMAD Phase:\n\nThis is a randomized, double-blind, placebo-controlled, dose-escalating study in healthy volunteers. If SSC is not met in the SAD phase, then participants will be assigned to 1 of 2 cohorts and will be randomized within each cohort to Progerinin or placebo at 3:1 ratio. If SSC is achieved in the SAD phase, then the previous two doses will be used as the 2 cohorts in the MAD phase.",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "QUADRUPLE",
+              "whoMasked": [
+                "PARTICIPANT",
+                "CARE_PROVIDER",
+                "INVESTIGATOR",
+                "OUTCOMES_ASSESSOR"
+              ]
+            }
+          },
+          "enrollmentInfo": {
+            "count": 64,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "SAD Phase including Food Interaction",
+              "type": "EXPERIMENTAL",
+              "description": "Single Ascending Dose (SAD) study with up to 6 cohorts + Food interaction phase on two cohorts",
+              "interventionNames": [
+                "Drug: Progerinin",
+                "Drug: Placebo"
+              ]
+            },
+            {
+              "label": "MAD Phase",
+              "type": "EXPERIMENTAL",
+              "description": "Multiple Ascending Dose (MAD) study with up to 2 cohorts",
+              "interventionNames": [
+                "Drug: Progerinin",
+                "Drug: Placebo"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Progerinin",
+              "description": "100 mg/g nano-suspension for oral use",
+              "armGroupLabels": [
+                "MAD Phase",
+                "SAD Phase including Food Interaction"
+              ],
+              "otherNames": [
+                "SLC-D011"
+              ]
+            },
+            {
+              "type": "DRUG",
+              "name": "Placebo",
+              "description": "A substance that has no therapeutic effect, used as a control in testing Progerinin",
+              "armGroupLabels": [
+                "MAD Phase",
+                "SAD Phase including Food Interaction"
+              ],
+              "otherNames": [
+                "Vehicle control"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Incidence of Dose Limiting Toxicities (DLTs)",
+              "description": "Any clinically significant adverse event (AE)/serious adverse event (SAE) or clinically significant laboratory abnormality which is classified as \\> Grade 2 (according to the National Cancer Institute Common Terminology Criteria for Adverse Events \\[CTCAE\\] version 5.0), where applicable, deemed by the investigator as at least \"possibly, probably or definitely related\" to Progerinin but unrelated to concurrent illness, or concomitant medications.",
+              "timeFrame": "Day 1 through 7 days after the last study drug administration"
+            },
+            {
+              "measure": "Incidence of Treatment-Emergent Adverse Events (TEAEs)",
+              "description": "An adverse event (AE) is defined as any unfavorable or unintended sign, symptom, or disease that occurs or is reported by the patient to have occurred, or a worsening of a pre-existing condition. An adverse event may or may not be related to the study treatment.",
+              "timeFrame": "Day 1 through 7 days after the last study drug administration"
+            },
+            {
+              "measure": "Incidence of withdrawals due to Adverse Events (AEs)",
+              "description": "Incidence of withdrawals due to Adverse Events (AEs) defined above",
+              "timeFrame": "Day 1 through 7 days after the last study drug administration"
+            },
+            {
+              "measure": "Incidence of abnormal blood work tests results, abnormal Urinalysis and positive Pregnancy test",
+              "timeFrame": "At baseline, 72 to 96 hours after the last study drug administration, and on Day 7 after the first and the last study drug administration"
+            },
+            {
+              "measure": "Change in vital signs",
+              "description": "Vital signs measurement includes blood pressure (both systolic and diastolic blood pressures), pulse, temperature and respiratory rate.",
+              "timeFrame": "At pre-dose, over 96 hours after study drug administration, and on Day 7 after the last study drug administration"
+            },
+            {
+              "measure": "Incidence of abnormal ECG parameters",
+              "timeFrame": "At pre-dose, over 96 hours after study drug administration, and on Day 7 after the last study drug administration"
+            },
+            {
+              "measure": "Incidence of abnormal physical examination findings",
+              "timeFrame": "At baseline, 96 hours after the last study drug administration, and on Day 7 after the last study drug administration"
+            },
+            {
+              "measure": "Maximum observed plasma drug concentration (Cmax)",
+              "timeFrame": "0-96 hours"
+            },
+            {
+              "measure": "Apparent terminal elimination half-life (t1/2)",
+              "timeFrame": "0-96 hours"
+            },
+            {
+              "measure": "Time to maximum observed plasma drug concentration (Tmax)",
+              "timeFrame": "0-96 hours"
+            },
+            {
+              "measure": "Area under the plasma drug concentration-time curve (AUC)",
+              "timeFrame": "0-96 hours"
+            },
+            {
+              "measure": "Percentage of AUC0-\u221e extrapolated from Tlast to infinity (AUCext)",
+              "timeFrame": "0-96 hours"
+            },
+            {
+              "measure": "Apparent plasma clearance (CL/F)",
+              "timeFrame": "0-96 hours"
+            },
+            {
+              "measure": "Apparent Volume of distribution (Vz/F)",
+              "timeFrame": "0-96 hours"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "Inclusion Criteria:\n\nSubjects will be eligible for enrollment in the study only if they meet ALL of the following criteria:\n\n1. Healthy male and female subjects, 18 to 45 years of age, inclusive.\n2. The subject has a body mass index (BMI) of 18.0 to 30.0 kg/m2, inclusive, and weighs at least 50 kg.\n3. The subject is in good health and has no medical condition of clinical significance or that may impact the outcome of the study, as determined by the investigator (as determined by medical history, physical examination, 12-lead electrocardiogram \\[ECG\\], vital signs, and clinical laboratory results at screening).\n4. The subject is able to understand the nature of the study and any potential hazards associated with participating in it.\n5. The subject is able to communicate satisfactorily with the investigator and to participate in, and comply with, the requirements of the study.\n6. The subject is willing to provide written informed consent to participate in the study after reading the informed consent form and the information provided, and has had the opportunity to discuss the study with the investigator or designee.\n7. Negative pregnancy test for female subjects. Women of child bearing potential (WOCBP) and Women not of child bearing potential are eligible to participate. Both women of child bearing potential and women of no child bearing potential should use an approved method of birth control and agrees to continue to use this method for the duration of the study (and for 90 days after taking the last dose of Progerinin).\n\n   Acceptable methods of contraception include abstinence, female subject/partner's use of hormonal contraceptive (oral, implanted, or injected) in conjunction with a barrier method (WOCBP only), female subject/partner's use of an intrauterine device (IUD), or if the female subject/partner is surgically sterile or 2 years post-menopausal. All male subjects/partners must agree to consistently and correctly use a condom for the duration of the study and for 90 days after taking the study drug. In addition, subjects may not donate sperm for the duration of the study and for 90 days after taking study drug.\n8. Subjects not taking any medications or dietary supplements (i.e., St. John's Wort and goldenseal) which are inhibitors or inducers of CYP 3A4 and CYP 2D6 during screening and for the duration of the trial.\n9. Subjects not taking any medications which are substrates of CYP2C8, CYP2C9, CYP2C19, CYP2D6, CYP3A4/5 during screening and for the duration of the trial.\n\nExclusion Criteria:\n\nSubjects will be eligible for enrollment in the study only if they meet NONE of the following criteria:\n\n1. The subject has a history of severe allergic or anaphylactic reactions.\n2. The subject has a known allergy or hypersensitivity to any component of the formulation.\n3. The subject has a medical history or current evidence of any clinically significant (as determined by the investigator) cardiac, endocrine (including diabetes), hematologic, hepatobiliary (abnormal 12lanine aminotransferase \\[ALT\\], aspartate aminotransferase \\[AST\\], gamma-glutamyl transpeptidase \\[GGT\\], or total bilirubin), immunologic, metabolic, urologic, pulmonary, neurologic, dermatologic, psychiatric, or renal condition, or other major disease.\n4. The subject has a history of any malignant disease.\n5. The subject has a history of more than one herpes zoster episode or multimetameric herpes zoster.\n6. The subject has a history of an opportunistic infection (e.g. cytomegalovirus, pneumocystis carinii, aspergillosis, clostridium difficile).\n7. The subject has a history of or ongoing chronic or recurrent infectious disease (e.g. infected indwelling prosthesis, osteomyelitis, chronic sinusitis).\n8. The subject has had major trauma or surgery in the 2 months before screening or at any time between screening and check-in.\n9. The subject has had an acute infection within 2 weeks before screening or at any time between screening and check-in including, but not limited to, history, signs, or symptoms of a common cold (eg, mild rhinorrhea), untreated oral/dental abnormalities (e.g. untreated dental caries as determined by examination of the mouth), or untreated disruption of the skin.\n10. The subject has clinically significant abnormal ECG findings at screening, check-in visits, or predose, as determined by the Investigator.\n11. The subject has a supine blood pressure measurement outside the ranges of 90 to 140 mm Hg systolic or 45 to 90 mm Hg diastolic (measured after a rest of at least 5 minutes) at screening, check-in, or predose. Note: If either value is out of the range, blood pressure measurements may be repeated in the supine position at intervals of 5 to 10 minutes up to 3 times. If the mean systolic or diastolic measurement continues to exceed the stated limits, the subject will be excluded.\n12. The subject has a pulse of fewer than 45 beats per minute (bpm) or greater than 100 bpm (measured after a rest of at least 5 minutes) at screening, check-in, or predose.\n13. The subject tests positive for tuberculosis (TB) at screening by the QuantiFERON-TB Gold Test, or has a history of latent, inadequately treated, or active TB.\n14. The subject has a known history of, or a positive test result for, hepatitis B surface antigen (HbsAg), hepatitis C virus (HCV), or human immunodeficiency virus (HIV) types 1 or 2 at screening.\n15. The subject has used prescription or over-the-counter (OTC) medication (other than \u22642 g/day paracetamol \\[acetaminophen\\] or \u2264800 mg/day ibuprofen), vitamins, or herbal remedies, within 2 weeks or 5 half-lives before study drug administration, whichever is longer.\n16. The subject has participated in another clinical study of a new investigational drug or has received an investigational drug within the 3 months or 5 half-lives (if available) before study drug administration, whichever is longer.\n17. The subject has had a loss of more than 400 mL of blood (e.g. a blood donation) within 2 months before study drug administration, or has received any blood, plasma, or platelet transfusions within 3 months before check-in, or plans to donate blood during the study or within 3 months after the study.\n18. The subject has a history of alcohol abuse (defined as an alcohol intake more than 21 units per week) or a history of drug abuse within the 6 months before study drug administration, or a history of substance abuse deemed significant by the investigator. A unit of alcohol is defined as 240 mL of beer, 120 mL of wine, or 1 single shot of spirits. The subject will be required to abstain from alcohol consumption 48 hours prior to screening or check-in.\n19. The subject is a current smoker or has a history of smoking.\n20. The subject has a positive test for alcohol or drugs of abuse (barbiturates, methamphetamine, benzodiazepines, morphine/opiates, phencyclidine (PCP), amphetamines, tetrahydrocannabinol (THC), methylenedioxymethamphetamine (MDMA), cocaine, methadone, and cotinine) at screening or check-in.\n21. The subject is unable to participate in, or successfully complete, the study, in the opinion of their general practitioner or the investigator, because the subject is any of the following:\n\n    1. mentally or legally incapacitated, or unable to give consent for any reason\n    2. in custody due to an administrative or a legal decision, or under tutelage, or being admitted to a sanitarium or social institution\n    3. unable to be contacted in case of emergency\n    4. unlikely to cooperate or comply with the clinical study protocol or is unsuitable for any other reason",
+          "healthyVolunteers": true,
+          "sex": "ALL",
+          "minimumAge": "18 Years",
+          "maximumAge": "45 Years",
+          "stdAges": [
+            "ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "locations": [
+            {
+              "facility": "PRG S&T Investigational Site",
+              "city": "Glendale",
+              "state": "California",
+              "zip": "91206",
+              "country": "United States",
+              "geoPoint": {
+                "lat": 34.14251,
+                "lon": -118.25508
+              }
+            }
+          ]
+        },
+        "referencesModule": {
+          "seeAlsoLinks": [
+            {
+              "label": "PRG S\\&T Expanded Access Program",
+              "url": "http://prgst.com/bbs/board.php?bo_table=notice_eng&wr_id=6"
+            }
+          ]
+        },
+        "ipdSharingStatementModule": {
+          "ipdSharing": "NO"
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-04-03"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D011371",
+              "term": "Progeria"
+            },
+            {
+              "id": "D014898",
+              "term": "Werner Syndrome"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D000083083",
+              "term": "Laminopathies"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D008661",
+              "term": "Metabolism, Inborn Errors"
+            },
+            {
+              "id": "D008659",
+              "term": "Metabolic Diseases"
+            },
+            {
+              "id": "D009750",
+              "term": "Nutritional and Metabolic Diseases"
+            },
+            {
+              "id": "D049914",
+              "term": "DNA Repair-Deficiency Disorders"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    },
+    {
+      "protocolSection": {
+        "identificationModule": {
+          "nctId": "NCT03871972",
+          "orgStudyIdInfo": {
+            "id": "2018-12-031"
+          },
+          "organization": {
+            "fullName": "Bundang CHA Hospital",
+            "class": "OTHER"
+          },
+          "briefTitle": "Umbilical Cord Blood Transfusion in Progeria Syndrome",
+          "officialTitle": "Safety and Efficacy of Umbilical Cord Blood Transfusion in Patients With Hutchinson-Gilford Progeria Syndrome"
+        },
+        "statusModule": {
+          "statusVerifiedDate": "2020-11",
+          "overallStatus": "COMPLETED",
+          "expandedAccessInfo": {
+            "hasExpandedAccess": false
+          },
+          "startDateStruct": {
+            "date": "2019-03-05",
+            "type": "ACTUAL"
+          },
+          "primaryCompletionDateStruct": {
+            "date": "2020-06-01",
+            "type": "ACTUAL"
+          },
+          "completionDateStruct": {
+            "date": "2020-06-01",
+            "type": "ACTUAL"
+          },
+          "studyFirstSubmitDate": "2019-03-07",
+          "studyFirstSubmitQcDate": "2019-03-11",
+          "studyFirstPostDateStruct": {
+            "date": "2019-03-12",
+            "type": "ACTUAL"
+          },
+          "lastUpdateSubmitDate": "2020-11-02",
+          "lastUpdatePostDateStruct": {
+            "date": "2020-11-04",
+            "type": "ACTUAL"
+          }
+        },
+        "sponsorCollaboratorsModule": {
+          "responsibleParty": {
+            "type": "PRINCIPAL_INVESTIGATOR",
+            "investigatorFullName": "MinYoung Kim, MD, PhD",
+            "investigatorTitle": "Head of Rehabilitation Medicine Department, Professor, Principal Investigator",
+            "investigatorAffiliation": "Bundang CHA Hospital"
+          },
+          "leadSponsor": {
+            "name": "Bundang CHA Hospital",
+            "class": "OTHER"
+          }
+        },
+        "oversightModule": {
+          "oversightHasDmc": false,
+          "isFdaRegulatedDrug": false,
+          "isFdaRegulatedDevice": false
+        },
+        "descriptionModule": {
+          "briefSummary": "This is a pilot study on safety and efficacy of umbilical cord blood therapy for patients with Hutchinson Gilford Progeria syndrome (HGPS). This is an 1 year trial with 3 IV infusions (4 months apart from each infusion) of umbilical cord blood units with oral Sirolimus to see the safety and efficacy.",
+          "detailedDescription": "This is a pilot study on safety and efficacy of umbilical cord blood therapy for patients with Hutchinson Gilford Progeria syndrome (HGPS). HGPS is a rare genetic disease where affected LMNA gene coding lamin A protein leads to premature aging and early death.\n\nTeenagers with HGPS are in high risk of atherosclerosis and ischemic stroke, and these are major reason of mortality in HGPS.Currently, there are no definite cure for this rare genetic disease. Among the potential drugs under investigation, Lornafarnib (farnesyltransferase inhibitor) lowered the carotid-femoral pulse wave velocity (cfPWV) and also lowered mortality.\n\nStem cell therapy has proven its efficacy in progeria mouse model. We are trying to study safety and efficacy of umbilical cord blood therapy in human HGPS patients."
+        },
+        "conditionsModule": {
+          "conditions": [
+            "Hutchinson-Gilford Progeria Syndrome"
+          ]
+        },
+        "designModule": {
+          "studyType": "INTERVENTIONAL",
+          "phases": [
+            "PHASE1",
+            "PHASE2"
+          ],
+          "designInfo": {
+            "allocation": "NA",
+            "interventionModel": "SINGLE_GROUP",
+            "primaryPurpose": "TREATMENT",
+            "maskingInfo": {
+              "masking": "NONE"
+            }
+          },
+          "enrollmentInfo": {
+            "count": 2,
+            "type": "ACTUAL"
+          }
+        },
+        "armsInterventionsModule": {
+          "armGroups": [
+            {
+              "label": "UCB injection group",
+              "type": "EXPERIMENTAL",
+              "description": "This pilot study includes only 2 subjects who are enrolled by invitation. Both subjects are included in this single arm.",
+              "interventionNames": [
+                "Drug: Umbilical Cord Blood Unit"
+              ]
+            }
+          ],
+          "interventions": [
+            {
+              "type": "DRUG",
+              "name": "Umbilical Cord Blood Unit",
+              "description": "3 infusions of umbilical cord blood (UCB) unit (TNC \\> 2.0\u2179107cells/kg) each 4 months apart and take oral Sirolimus (1 mg/m2/day) for 7 days (from 3 days before UCB infusion until 3 days after UCB infusion)",
+              "armGroupLabels": [
+                "UCB injection group"
+              ],
+              "otherNames": [
+                "Oral Sirolimus"
+              ]
+            }
+          ]
+        },
+        "outcomesModule": {
+          "primaryOutcomes": [
+            {
+              "measure": "Change from baseline Carotid-femoral pulse wave velocity at 48 weeks",
+              "description": "measured by carotid doppler ultrasonography",
+              "timeFrame": "48 weeks after UCB infusion"
+            },
+            {
+              "measure": "Change from baseline serum HDL cholesterol at 48 weeks",
+              "description": "taken on routine lab",
+              "timeFrame": "48 weeks after UCB infusion"
+            },
+            {
+              "measure": "Change from baseline weight at 48 weeks",
+              "description": "measured by bioimpedance analysis",
+              "timeFrame": "48 weeks after UCB infusion"
+            }
+          ],
+          "secondaryOutcomes": [
+            {
+              "measure": "Ankle-brachial index",
+              "description": "measured by automatic blood pressure gauge",
+              "timeFrame": "baseline, 48 weeks after UCB infusion"
+            },
+            {
+              "measure": "Body fat proportion",
+              "description": "taken by bioimpedance analysis",
+              "timeFrame": "baseline, 48 weeks after UCB infusion"
+            },
+            {
+              "measure": "Range of motion",
+              "description": "measured manually",
+              "timeFrame": "baseline, 48 weeks after UCB infusion"
+            },
+            {
+              "measure": "height",
+              "description": "measured by bioimpedance analysis",
+              "timeFrame": "baseline, 48 weeks after UCB infusion"
+            }
+          ]
+        },
+        "eligibilityModule": {
+          "eligibilityCriteria": "This is a pilot study including 2 patients with HGPS.\n\nInclusion Criteria:\n\n* those who were clinically and genetically diagnosed as Hutchinson-Gilford progeria syndrome\n\nExclusion Criteria:\n\n* those who show definite hemorrhage or ischemia on brain MRI\n* those who are affected with systemic infection during study enrolling period\n* those who are not able to able to make consents to the study; those who are not accompanying any guardians\n* those who were enrolled in other clinical trials within last 30 days\n* those who are not appropriate according to laboratory criteria\n\n  1. whose ALT/AST \\> 2 fold of normal limit\n  2. whose serum creatinine \\> 1.5 fold of normal limit\n  3. whose total bilirubin \\> 2 fold of normal limit\n  4. whose total WBC count \\< 3000/mm3\n  5. whose platelet count \\< normal lower limit\n* those who are diagnosed with other malignancies\n* those who are affected by other serious medical (cardiopulmonary, gastrointestinal, endocrinologic, etc.) conditions",
+          "healthyVolunteers": false,
+          "sex": "ALL",
+          "stdAges": [
+            "CHILD",
+            "ADULT",
+            "OLDER_ADULT"
+          ]
+        },
+        "contactsLocationsModule": {
+          "overallOfficials": [
+            {
+              "name": "Min Young Kim, MD, PhD",
+              "affiliation": "CHA University",
+              "role": "PRINCIPAL_INVESTIGATOR"
+            }
+          ],
+          "locations": [
+            {
+              "facility": "Bundang CHA Medical Center",
+              "city": "Seongnam-si",
+              "state": "Gyeonggi-do",
+              "zip": "13496",
+              "country": "South Korea",
+              "geoPoint": {
+                "lat": 37.43861,
+                "lon": 127.13778
+              }
+            }
+          ]
+        },
+        "ipdSharingStatementModule": {
+          "ipdSharing": "NO"
+        }
+      },
+      "derivedSection": {
+        "miscInfoModule": {
+          "versionHolder": "2026-04-03"
+        },
+        "conditionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D011371",
+              "term": "Progeria"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D000083083",
+              "term": "Laminopathies"
+            },
+            {
+              "id": "D030342",
+              "term": "Genetic Diseases, Inborn"
+            },
+            {
+              "id": "D009358",
+              "term": "Congenital, Hereditary, and Neonatal Diseases and Abnormalities"
+            },
+            {
+              "id": "D008661",
+              "term": "Metabolism, Inborn Errors"
+            },
+            {
+              "id": "D008659",
+              "term": "Metabolic Diseases"
+            },
+            {
+              "id": "D009750",
+              "term": "Nutritional and Metabolic Diseases"
+            }
+          ]
+        },
+        "interventionBrowseModule": {
+          "meshes": [
+            {
+              "id": "D020123",
+              "term": "Sirolimus"
+            }
+          ],
+          "ancestors": [
+            {
+              "id": "D018942",
+              "term": "Macrolides"
+            },
+            {
+              "id": "D007783",
+              "term": "Lactones"
+            },
+            {
+              "id": "D009930",
+              "term": "Organic Chemicals"
+            }
+          ]
+        }
+      },
+      "hasResults": false
+    }
+  ]
+}
