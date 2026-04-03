@@ -133,12 +133,6 @@ def render_competitive(aggregate: dict, trials: list[dict], insights: list[dict]
         else:
             st.info("No declining trials found.")
 
-    st.divider()
-
-    # --- Row 6: Opportunity analysis ---
-    st.subheader("Opportunity Analysis")
-    _render_opportunities(aggregate)
-
 
 def _render_gantt(aggregate: dict):
     """Render a Gantt chart of trial timelines."""
@@ -198,67 +192,3 @@ def _render_gantt(aggregate: dict):
     )
     st.plotly_chart(fig, width="stretch")
 
-
-def _render_opportunities(aggregate: dict):
-    """Render opportunity analysis based on gaps in the data."""
-    phase_dist = aggregate.get("phase_distribution", {})
-    signal_dist = aggregate.get("signal_distribution", {})
-    sponsors = aggregate.get("top_sponsors", [])
-    moa_clusters = aggregate.get("moa_clusters", [])
-    moa_groups = aggregate.get("moa_groups", [])
-    progressing = len(aggregate.get("progressing_trials", []))
-    declining = len(aggregate.get("declining_trials", []))
-
-    observations = []
-
-    # Phase gap analysis
-    late_stage = phase_dist.get("PHASE3", 0) + phase_dist.get("PHASE4", 0)
-    early_stage = phase_dist.get("PHASE1", 0) + phase_dist.get("EARLY_PHASE1", 0)
-    if late_stage == 0 and early_stage > 0:
-        observations.append("No Phase 3/4 trials exist — the space is entirely early-stage, representing high risk but potential first-mover advantage.")
-    elif late_stage > 0 and early_stage > late_stage * 2:
-        observations.append(f"Pipeline-heavy space: {early_stage} early-stage vs {late_stage} late-stage trials. Many candidates may not advance.")
-
-    # Concentration risk
-    if sponsors and sponsors[0]["count"] > aggregate.get("total_trials", 1) * 0.3:
-        observations.append(f"**{sponsors[0]['name']}** dominates with {sponsors[0]['count']} trials ({sponsors[0]['count']*100//max(aggregate.get('total_trials',1),1)}% of total). High concentration risk.")
-
-    # Signal balance
-    pos = signal_dist.get("POSITIVE", 0)
-    neg = signal_dist.get("NEGATIVE", 0)
-    if pos > neg * 2 and pos > 3:
-        observations.append(f"Strong positive signal density ({pos} positive vs {neg} negative) — multiple viable candidates.")
-    elif neg > pos and neg > 3:
-        observations.append(f"Challenging space: {neg} negative vs {pos} positive signals. High failure rate suggests difficult biology.")
-
-    # Momentum
-    if declining > progressing and declining > 3:
-        observations.append(f"More trials declining ({declining}) than progressing ({progressing}). The space may be cooling off.")
-    elif progressing > declining * 2:
-        observations.append(f"Active space with {progressing} progressing trials — strong current interest.")
-
-    # MOA diversity (use grouped if available)
-    moa_count = len(moa_groups) if moa_groups else len(moa_clusters)
-    if moa_count >= 5:
-        observations.append(f"Diverse approach landscape with {moa_count}+ distinct mechanism categories. No single MOA dominates.")
-    elif moa_count == 1:
-        name = moa_groups[0]["group"] if moa_groups else (moa_clusters[0]["mechanism"] if moa_clusters else "unknown")
-        observations.append(f"Single dominant mechanism: **{name}**. Alternative approaches could be differentiated.")
-
-    # Timeline insights
-    starts = aggregate.get("starts_by_year", {})
-    if starts:
-        years = sorted(starts.keys())
-        if len(years) >= 2:
-            recent = sum(starts.get(y, 0) for y in years[-2:])
-            older = sum(starts.get(y, 0) for y in years[:-2])
-            if recent > older and recent > 5:
-                observations.append(f"Accelerating interest: {recent} trials started in the last 2 years vs {older} before that.")
-            elif older > recent * 2:
-                observations.append(f"Activity may be declining: only {recent} recent starts vs {older} historically.")
-
-    if not observations:
-        observations.append("Insufficient data to identify clear opportunities. Consider broadening the search.")
-
-    for obs in observations:
-        st.markdown(f"- {obs}")

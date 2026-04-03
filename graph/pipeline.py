@@ -185,6 +185,61 @@ async def aggregate_results(state: OverallState) -> dict:
 
     agg = aggregate_insights(insights, trials)
 
+    # Determine most investable company via LLM
+    try:
+        llm = get_llm(temperature=0)
+        sponsor_summary = "\n".join(
+            f"- {s['name']}: {s['count']} trials"
+            for s in agg.get("top_sponsors", [])[:10]
+        )
+        insight_map = {}
+        for i in insights:
+            sponsor = None
+            for t in trials:
+                if t.get("id") == i.get("trial_id"):
+                    sponsor = t.get("sponsor_name")
+                    break
+            if sponsor:
+                insight_map.setdefault(sponsor, []).append(i)
+
+        sponsor_details = []
+        for sponsor, sponsor_insights in list(insight_map.items())[:10]:
+            pos = sum(1 for i in sponsor_insights if i.get("investment_signal") == "POSITIVE")
+            neg = sum(1 for i in sponsor_insights if i.get("investment_signal") == "NEGATIVE")
+            drugs = set()
+            for i in sponsor_insights:
+                for d in i.get("drug_names") or []:
+                    drugs.add(d)
+            sponsor_details.append(
+                f"- {sponsor}: {len(sponsor_insights)} trials, {pos} positive/{neg} negative signals, drugs: {', '.join(list(drugs)[:5]) or 'N/A'}"
+            )
+
+        prompt = (
+            f"Based on this clinical trial data for '{state['disease_keyword']}', identify the single most investable company/sponsor.\n\n"
+            f"Sponsor overview:\n{sponsor_summary}\n\n"
+            f"Detailed signals:\n" + "\n".join(sponsor_details) + "\n\n"
+            f"Phase distribution: {agg.get('phase_distribution', {})}\n"
+            f"Signal distribution: {agg.get('signal_distribution', {})}\n\n"
+            "Respond in EXACTLY this format, nothing else:\n"
+            "COMPANY: <company name>\n"
+            "REASON: <1-2 sentence reason why this is the most investable>"
+        )
+        resp = await llm.ainvoke([{"role": "user", "content": prompt}])
+        text = resp.content.strip()
+        lines = text.split("\n")
+        company = ""
+        reason = ""
+        for line in lines:
+            if line.startswith("COMPANY:"):
+                company = line.split(":", 1)[1].strip()
+            elif line.startswith("REASON:"):
+                reason = line.split(":", 1)[1].strip()
+        if company:
+            agg["most_investable"] = {"company": company, "reason": reason}
+            logger.info("Most investable: %s", company)
+    except Exception:
+        logger.exception("aggregate_results: most investable determination failed")
+
     update_session(sb, session_id, status="COMPLETED")
     logger.info("aggregate_results: session %s marked COMPLETED", session_id)
 

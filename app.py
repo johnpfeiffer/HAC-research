@@ -20,6 +20,9 @@ from components.dashboard import render_dashboard
 from components.trial_table import render_trial_table
 from components.chat_panel import render_chat_panel
 from components.competitive import render_competitive
+
+from components.insights_panel import render_insights_panel
+
 from components.addressable_market import render_addressable_market
 from services.supabase_client import (
     get_client,
@@ -187,6 +190,10 @@ if session_id and st.session_state["pipeline_complete"]:
     trials = get_trials(sb, session_id)
     insights = get_insights(sb, session_id)
     aggregate = st.session_state["aggregate"]
+
+    render_insights_panel(aggregate, trials, insights)
+
+    st.divider()
 
     tab_dashboard, tab_competitive, tab_trials, tab_chat, tab_market = st.tabs(
         ["Overview", "Competitive Dynamics", "Trial Details", "Chat", "Addressable Market"]
