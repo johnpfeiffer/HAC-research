@@ -53,7 +53,8 @@ class ClinicalTrialsClient:
         page_size: int = 10,
         status: Optional[str] = None,
         format: str = "json",
-        page_token: Optional[str] = None
+        page_token: Optional[str] = None,
+        start_date_min: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Search for clinical trials by condition.
@@ -64,6 +65,7 @@ class ClinicalTrialsClient:
             status: Filter by study status (e.g., 'RECRUITING', 'COMPLETED')
             format: Response format, 'json' or 'csv' (default: 'json')
             page_token: Token for pagination (optional)
+            start_date_min: Minimum study start date in YYYY-MM-DD format (optional)
 
         Returns:
             Dict containing the API response with studies
@@ -74,6 +76,9 @@ class ClinicalTrialsClient:
             'format': format,
             'countTotal': 'true'
         }
+
+        if start_date_min:
+            params['query.term'] = f'AREA[StartDate]RANGE[{start_date_min},MAX]'
 
         if status:
             params['filter.overallStatus'] = status
@@ -202,6 +207,12 @@ def main():
         default=5,
         help='Number of results to retrieve (default: 5)'
     )
+    parser.add_argument(
+        '--start-date-min',
+        type=str,
+        default=None,
+        help='Minimum study start date in YYYY-MM-DD format (e.g., 2020-01-01)'
+    )
 
     args = parser.parse_args()
 
@@ -215,7 +226,8 @@ def main():
     response = client.search_condition(
         condition=args.disease,
         page_size=args.page_size,
-        status=status_filter
+        status=status_filter,
+        start_date_min=args.start_date_min
     )
 
     if "error" in response:

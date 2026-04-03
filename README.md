@@ -13,6 +13,10 @@ Supabase
 
 # Directory Layout
 
+/gather-data
+
+python main.py --disease "NSCLC" --status ALL --page-size 100 --start-date-min 2010-01-01
+
 # Dev
 
 # Deploy
