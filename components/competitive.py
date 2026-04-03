@@ -1,13 +1,18 @@
 """Competitive dynamics dashboard component."""
 
+import logging
+
 import streamlit as st
 import plotly.express as px
 import plotly.figure_factory as ff
 import pandas as pd
 
+logger = logging.getLogger(__name__)
+
 
 def render_competitive(aggregate: dict, trials: list[dict], insights: list[dict]):
     """Render competitive dynamics dashboard."""
+    logger.debug("Rendering competitive dashboard: %d trials, %d insights", len(trials), len(insights))
     if not aggregate:
         st.warning("No data to display.")
         return
@@ -83,49 +88,24 @@ def render_competitive(aggregate: dict, trials: list[dict], insights: list[dict]
 
     st.divider()
 
-    # --- Row 4: MOA groups (LLM-condensed) + raw MOA clusters ---
+    # --- Row 4: Raw MOA clusters ---
     st.subheader("Mechanisms of Action")
-    col5, col6 = st.columns(2)
-
-    with col5:
-        st.markdown("**Grouped (AI-synthesized)**")
-        moa_groups = aggregate.get("moa_groups", [])
-        if moa_groups:
-            df = pd.DataFrame(moa_groups)
-            if "group" in df.columns and "count" in df.columns:
-                fig = px.bar(df, y="group", x="count", orientation="h",
-                             color="group", color_discrete_sequence=px.colors.qualitative.Pastel)
-                fig.update_layout(
-                    yaxis=dict(categoryorder="total ascending"),
-                    margin=dict(t=20, b=20, l=10), showlegend=False,
-                )
-                st.plotly_chart(fig, width="stretch")
-
-                # Show which MOAs are in each group
-                for g in moa_groups:
-                    with st.expander(f"{g.get('group', 'Unknown')} ({g.get('count', 0)} trials)"):
-                        for m in g.get("moas", []):
-                            st.markdown(f"- {m}")
-            else:
-                st.info("MOA grouping data format unexpected.")
-        else:
-            st.info("No grouped MOA data — will appear on new searches.")
-
-    with col6:
-        st.markdown("**Raw Mechanisms (ungrouped)**")
-        moa = aggregate.get("moa_clusters", [])
-        if moa:
-            df = pd.DataFrame(moa)
-            fig = px.bar(df, y="mechanism", x="count", orientation="h",
-                         color="count", color_continuous_scale="Teal")
-            fig.update_layout(
-                yaxis=dict(categoryorder="total ascending"),
-                margin=dict(t=20, b=20, l=10), showlegend=False,
-                coloraxis_showscale=False,
-            )
-            st.plotly_chart(fig, width="stretch")
-        else:
-            st.info("No mechanism data available.")
+    moa = aggregate.get("moa_clusters", [])
+    if moa:
+        for m in moa:
+            if len(m["mechanism"]) > 50:
+                m["mechanism"] = m["mechanism"][:47] + "..."
+        df = pd.DataFrame(moa)
+        fig = px.bar(df, y="mechanism", x="count", orientation="h",
+                     color="count", color_continuous_scale="Teal")
+        fig.update_layout(
+            yaxis=dict(categoryorder="total ascending"),
+            margin=dict(t=20, b=20, l=10), showlegend=False,
+            coloraxis_showscale=False,
+        )
+        st.plotly_chart(fig, width="stretch")
+    else:
+        st.info("No mechanism data available.")
 
     st.divider()
 

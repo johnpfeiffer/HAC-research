@@ -1,7 +1,11 @@
 """Streamlit search input component with filters."""
 
+import logging
+
 import streamlit as st
 from datetime import date
+
+logger = logging.getLogger(__name__)
 
 
 def render_search_form() -> dict | None:
@@ -43,6 +47,7 @@ def render_search_form() -> dict | None:
         submitted = st.form_submit_button("Analyze Trials", type="primary")
 
     if submitted and disease:
+        logger.info("Search submitted: disease=%r, phases=%s, status=%s, max_results=%d", disease, phases, status, max_results)
         date_range = None
         if start_date and end_date:
             date_range = (start_date.isoformat(), end_date.isoformat())

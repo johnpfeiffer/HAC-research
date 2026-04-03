@@ -3,12 +3,16 @@
 ClinicalTrials.gov API Client for querying clinical trials by disease.
 """
 
-import requests
-from typing import Optional, Dict, List, Any
-import json
 import argparse
-import re
+import json
+import logging
 import os
+import re
+from typing import Optional, Dict, List, Any
+
+import requests
+
+logger = logging.getLogger(__name__)
 
 
 class ClinicalTrialsClient:
@@ -22,6 +26,7 @@ class ClinicalTrialsClient:
         self.session.headers.update({
             'User-Agent': 'Python-ClinicalTrials-Client/1.0'
         })
+        logger.info("ClinicalTrialsClient initialized")
 
     def search_stargardt(
         self,
@@ -70,6 +75,7 @@ class ClinicalTrialsClient:
         Returns:
             Dict containing the API response with studies
         """
+        logger.info("Searching condition=%r, page_size=%d, status=%s", condition, page_size, status)
         params = {
             'query.cond': condition,
             'pageSize': page_size,
@@ -91,11 +97,14 @@ class ClinicalTrialsClient:
             response.raise_for_status()
 
             if format == "json":
-                return response.json()
+                data = response.json()
+                logger.info("Search returned %d studies", len(data.get("studies", [])))
+                return data
             else:
                 return {"data": response.text}
 
         except requests.exceptions.RequestException as e:
+            logger.error("API request failed: %s", e)
             return {"error": str(e)}
 
     def get_all_stargardt_trials(
@@ -154,6 +163,7 @@ class ClinicalTrialsClient:
         Returns:
             Dict containing study details
         """
+        logger.info("Fetching study details: %s", nct_id)
         url = f"{self.BASE_URL}/{nct_id}"
 
         try:
@@ -161,6 +171,7 @@ class ClinicalTrialsClient:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
+            logger.error("Failed to fetch study %s: %s", nct_id, e)
             return {"error": str(e)}
 
     def print_study_summary(self, study: Dict[str, Any]) -> None:
@@ -186,6 +197,11 @@ class ClinicalTrialsClient:
 
 def main():
     """Example usage of the ClinicalTrials client."""
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
     parser = argparse.ArgumentParser(
         description='Search ClinicalTrials.gov for clinical trials by disease condition.'
     )

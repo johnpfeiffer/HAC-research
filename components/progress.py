@@ -1,7 +1,11 @@
 """Processing progress display component."""
 
+import logging
+
 import streamlit as st
 from services.supabase_client import get_client, get_session
+
+logger = logging.getLogger(__name__)
 
 
 def render_progress(session_id: str) -> bool:
@@ -16,6 +20,7 @@ def render_progress(session_id: str) -> bool:
     status = session.get("status", "FETCHING")
     total = session.get("total_trials") or 0
     processed = session.get("processed_trials") or 0
+    logger.debug("Progress check: session=%s status=%s processed=%d/%d", session_id, status, processed, total)
 
     if status == "FETCHING":
         st.info("Fetching trials from ClinicalTrials.gov...")

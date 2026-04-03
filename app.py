@@ -1,11 +1,18 @@
 """Streamlit entry point for Clinical Trials Investment Dashboard."""
 
 import asyncio
+import logging
 
 import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
+
+from services.logging_config import setup_logging
+
+setup_logging()
+
+logger = logging.getLogger(__name__)
 
 from components.search_form import render_search_form
 from components.progress import render_progress
@@ -43,6 +50,7 @@ st.divider()
 
 def run_pipeline(search_params: dict, session_id: str, status_container):
     """Run the LangGraph analysis pipeline with live logging."""
+    logger.info("Starting pipeline: session=%s, params=%s", session_id, search_params)
     pipeline = build_pipeline()
     initial_state = {
         "disease_keyword": search_params["disease_keyword"],
@@ -128,7 +136,9 @@ def run_pipeline(search_params: dict, session_id: str, status_container):
                 result = output
 
         if result is None:
+            logger.warning("Pipeline returned no result for session %s", session_id)
             result = {"aggregate": {}}
+        logger.info("Pipeline complete for session %s", session_id)
         return result
 
     return asyncio.run(_run())

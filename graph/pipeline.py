@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import logging
 
 from langgraph.graph import StateGraph, START, END
 from langgraph.types import Send
@@ -19,6 +20,8 @@ from services.supabase_client import (
 from services.aggregator import aggregate_insights
 from prompts.extraction import EXTRACTION_SYSTEM_PROMPT, TrialInsight
 
+logger = logging.getLogger(__name__)
+
 
 # ---------------------------------------------------------------------------
 # Nodes
@@ -26,6 +29,7 @@ from prompts.extraction import EXTRACTION_SYSTEM_PROMPT, TrialInsight
 
 async def fetch_trials(state: OverallState) -> dict:
     """Fetch trials from ClinicalTrials.gov and store in Supabase."""
+    logger.info("fetch_trials: keyword=%r, max_results=%d", state["disease_keyword"], state.get("max_results", 100))
     client = CTClient()
     studies = await client.search(
         condition=state["disease_keyword"],
@@ -42,9 +46,11 @@ async def fetch_trials(state: OverallState) -> dict:
     session_id = state["search_session_id"]
 
     if not parsed:
+        logger.warning("fetch_trials: no trials found for %r", state["disease_keyword"])
         update_session(sb, session_id, status="COMPLETED", total_trials=0)
         return {"raw_trials": []}
 
+    logger.info("fetch_trials: parsed %d trials, storing in Supabase", len(parsed))
     update_session(sb, session_id, status="PROCESSING", total_trials=len(parsed))
 
     stored_trials = insert_trials(sb, session_id, parsed)
@@ -58,11 +64,13 @@ async def fetch_trials(state: OverallState) -> dict:
             "raw_json": trial_row["raw_json"],
         })
 
+    logger.info("fetch_trials: %d trials ready for analysis", len(raw_trials))
     return {"raw_trials": raw_trials}
 
 
 def distribute_trials(state: OverallState) -> list[Send]:
     """Fan-out: create a Send for each trial to process in parallel."""
+    logger.info("distribute_trials: fanning out %d trials", len(state["raw_trials"]))
     return [
         Send(
             "analyze_trial",
@@ -78,127 +86,107 @@ def distribute_trials(state: OverallState) -> list[Send]:
 
 async def analyze_trial(state: TrialState) -> dict:
     """Call MiniMax to extract structured insights for a single trial."""
-    llm = get_llm()
-    llm_with_tools = llm.bind_tools([TrialInsight])
+    nct_id = state.get("trial_data", {}).get("protocolSection", {}).get("identificationModule", {}).get("nctId", "unknown")
+    logger.debug("analyze_trial: starting analysis for trial_db_id=%s (nct=%s)", state["trial_db_id"], nct_id)
+    try:
+        llm = get_llm()
+        llm_with_tools = llm.bind_tools([TrialInsight])
 
-    trial_json = json.dumps(state["trial_data"], indent=2, default=str)
-    messages = [
-        {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
-        {"role": "user", "content": f"Analyze this clinical trial:\n\n{trial_json}"},
-    ]
+        trial_json = json.dumps(state["trial_data"], indent=2, default=str)
+        messages = [
+            {"role": "system", "content": EXTRACTION_SYSTEM_PROMPT},
+            {"role": "user", "content": f"Analyze this clinical trial:\n\n{trial_json}"},
+        ]
 
-    response = await llm_with_tools.ainvoke(messages)
+        response = await llm_with_tools.ainvoke(messages)
 
-    # Extract tool call result
-    insight_data = {}
-    if response.tool_calls:
-        insight_data = response.tool_calls[0]["args"]
+        # Extract tool call result
+        insight_data = {}
+        if response.tool_calls:
+            insight_data = response.tool_calls[0]["args"]
 
-    # Schema: column name -> expected type
-    COLUMN_TYPES = {
-        "drug_names": list,
-        "drug_types": list,
-        "mechanism_of_action": str,
-        "primary_endpoints": list,
-        "secondary_endpoints": list,
-        "efficacy_summary": str,
-        "safety_summary": str,
-        "serious_ae_count": int,
-        "other_ae_count": int,
-        "top_adverse_events": list,
-        "investment_signal": str,
-        "investment_rationale": str,
-        "competitive_notes": str,
-        "patient_population": str,
-    }
+        # Schema: column name -> expected type
+        COLUMN_TYPES = {
+            "drug_names": list,
+            "drug_types": list,
+            "mechanism_of_action": str,
+            "primary_endpoints": list,
+            "secondary_endpoints": list,
+            "efficacy_summary": str,
+            "safety_summary": str,
+            "serious_ae_count": int,
+            "other_ae_count": int,
+            "top_adverse_events": list,
+            "investment_signal": str,
+            "investment_rationale": str,
+            "competitive_notes": str,
+            "patient_population": str,
+        }
 
-    def _safe_int(v):
-        if isinstance(v, int):
-            return v
-        try:
-            return int(str(v).strip().split()[0])
-        except (ValueError, TypeError, IndexError):
-            return 0
+        def _safe_int(v):
+            if isinstance(v, int):
+                return v
+            try:
+                return int(str(v).strip().split()[0])
+            except (ValueError, TypeError, IndexError):
+                return 0
 
-    insight_row = {
-        "trial_id": state["trial_db_id"],
-        "session_id": state["session_id"],
-    }
-    for col, expected_type in COLUMN_TYPES.items():
-        val = insight_data.get(col)
-        if val is None:
-            continue
-        if expected_type is int:
-            insight_row[col] = _safe_int(val)
-        elif expected_type is str:
-            if isinstance(val, str):
-                insight_row[col] = val
-            # skip malformed non-string values
-        elif expected_type is list:
-            if isinstance(val, list):
-                insight_row[col] = [
-                    item if isinstance(item, dict) else item
-                    for item in val
-                ]
-            # skip malformed non-list values
+        insight_row = {
+            "trial_id": state["trial_db_id"],
+            "session_id": state["session_id"],
+        }
+        for col, expected_type in COLUMN_TYPES.items():
+            val = insight_data.get(col)
+            if val is None:
+                continue
+            if expected_type is int:
+                insight_row[col] = _safe_int(val)
+            elif expected_type is str:
+                if isinstance(val, str):
+                    insight_row[col] = val
+            elif expected_type is list:
+                if isinstance(val, list):
+                    insight_row[col] = [
+                        item if isinstance(item, dict) else item
+                        for item in val
+                    ]
 
-    sb = get_client()
-    stored = insert_insight(sb, insight_row)
+        sb = get_client()
+        stored = insert_insight(sb, insight_row)
 
-    # Update processed count
-    from services.supabase_client import get_session
-    session = get_session(sb, state["session_id"])
-    update_session(
-        sb,
-        state["session_id"],
-        processed_trials=(session.get("processed_trials", 0) or 0) + 1,
-    )
+        # Update processed count
+        from services.supabase_client import get_session
+        session = get_session(sb, state["session_id"])
+        update_session(
+            sb,
+            state["session_id"],
+            processed_trials=(session.get("processed_trials", 0) or 0) + 1,
+        )
 
-    return {"insights": [stored]}
+        logger.debug("analyze_trial: completed nct=%s signal=%s", nct_id, insight_row.get("investment_signal"))
+        return {"insights": [stored]}
+
+    except Exception:
+        logger.exception("analyze_trial: failed for trial_db_id=%s (nct=%s)", state["trial_db_id"], nct_id)
+        return {"insights": []}
 
 
 async def aggregate_results(state: OverallState) -> dict:
     """Compute aggregate stats, group MOAs via LLM, and mark session complete."""
+    logger.info("aggregate_results: starting for session %s", state["search_session_id"])
     sb = get_client()
     session_id = state["search_session_id"]
 
     from services.supabase_client import get_trials, get_insights
+
     trials = get_trials(sb, session_id)
     insights = get_insights(sb, session_id)
+    logger.info("aggregate_results: loaded %d trials, %d insights", len(trials), len(insights))
 
     agg = aggregate_insights(insights, trials)
 
-    # Group MOAs into 5-6 categories via LLM
-    raw_moas = agg.get("raw_moas", [])
-    if raw_moas:
-        try:
-            llm = get_llm(temperature=0)
-            moa_list = "\n".join(f"- {m}" for m in set(raw_moas))
-            prompt = (
-                "Below is a list of mechanisms of action from clinical trials. "
-                "Group them into exactly 5-6 broad therapeutic categories. "
-                "For each category, provide a short name and list which MOAs belong to it.\n\n"
-                "Return ONLY valid JSON in this exact format, no other text:\n"
-                '[{"group": "Category Name", "moas": ["moa1", "moa2"], "count": 5}]\n\n'
-                "Where count is the total number of trials using MOAs in that group.\n\n"
-                f"MOA list:\n{moa_list}\n\n"
-                "MOA frequency:\n"
-                + "\n".join(f"- {m['mechanism']}: {m['count']} trials" for m in agg.get("moa_clusters", []))
-            )
-            response = await llm.ainvoke([{"role": "user", "content": prompt}])
-            import json as _json
-            text = response.content.strip()
-            # Strip markdown code fences if present
-            if text.startswith("```"):
-                text = text.split("\n", 1)[1] if "\n" in text else text[3:]
-                text = text.rsplit("```", 1)[0]
-            moa_groups = _json.loads(text.strip())
-            agg["moa_groups"] = moa_groups
-        except Exception:
-            # Fall back to ungrouped if LLM fails
-            pass
-
     update_session(sb, session_id, status="COMPLETED")
+    logger.info("aggregate_results: session %s marked COMPLETED", session_id)
 
     return {"aggregate": agg}
 
@@ -209,6 +197,7 @@ async def aggregate_results(state: OverallState) -> dict:
 
 def build_pipeline() -> StateGraph:
     """Build and compile the main analysis pipeline."""
+    logger.info("Building LangGraph pipeline")
     graph = StateGraph(OverallState)
 
     graph.add_node("fetch_trials", fetch_trials)

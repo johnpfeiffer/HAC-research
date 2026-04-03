@@ -1,10 +1,13 @@
 """Chat interface component using st.chat_message."""
 
 import asyncio
+import logging
 
 import streamlit as st
 from graph.chat import chat as chat_fn
 from services.supabase_client import get_client, get_messages
+
+logger = logging.getLogger(__name__)
 
 
 SUGGESTED_QUESTIONS = [
@@ -47,6 +50,7 @@ def render_chat_panel(session_id: str, aggregate: dict):
 
     question = pending or user_input
     if question:
+        logger.info("User question in chat panel: session=%s, len=%d", session_id, len(question))
         # Show user message
         with st.chat_message("user"):
             st.markdown(question)

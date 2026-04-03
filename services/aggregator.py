@@ -1,7 +1,9 @@
 """Compute aggregate statistics from a list of trial insights."""
 
+import logging
 from collections import Counter
 
+logger = logging.getLogger(__name__)
 
 PROGRESSING_STATUSES = {
     "RECRUITING", "ACTIVE_NOT_RECRUITING", "NOT_YET_RECRUITING",
@@ -18,6 +20,7 @@ def aggregate_insights(insights: list[dict], trials: list[dict]) -> dict:
 
     Returns a dict with distributions and totals suitable for dashboard rendering.
     """
+    logger.info("Aggregating insights: %d trials, %d insights", len(trials), len(insights))
     total = len(trials)
     with_results = sum(1 for t in trials if t.get("has_results"))
 
@@ -114,6 +117,11 @@ def aggregate_insights(insights: list[dict], trials: list[dict]) -> dict:
 
     # Fallback ungrouped MOA counts
     moa_counter = Counter(raw_moas)
+
+    logger.info(
+        "Aggregation complete: %d total, %d with results, %d unique sponsors, %d raw MOAs",
+        total, with_results, unique_sponsors, len(raw_moas),
+    )
 
     return {
         "total_trials": total,

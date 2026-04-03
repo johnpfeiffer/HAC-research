@@ -1,11 +1,16 @@
 """Chat system prompt for investment analyst Q&A."""
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def build_chat_system_prompt(aggregate: dict, insights: list[dict], trials: list[dict]) -> str:
     """
     Build the system prompt for the chat node, injecting aggregate stats
     and a compact trial index as context.
     """
+    logger.debug("Building chat system prompt: %d trials, %d insights", len(trials), len(insights))
     # Compact trial index: one line per trial
     trial_lines = []
     insight_map = {i.get("trial_id"): i for i in insights}

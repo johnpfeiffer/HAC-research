@@ -5,11 +5,14 @@ Async methods wrap requests calls with asyncio.to_thread.
 """
 
 import asyncio
+import logging
 import time
 from typing import Optional
 
 import requests
 
+
+logger = logging.getLogger(__name__)
 
 BASE_URL = "https://clinicaltrials.gov/api/v2/studies"
 
@@ -26,12 +29,15 @@ class CTClient:
         self.session.headers.update({
             "User-Agent": "Python-ClinicalTrials-Client/1.0",
         })
+        logger.info("CTClient initialized")
 
     def _throttle_sync(self):
         """Enforce rate limiting between requests (blocking)."""
         elapsed = time.monotonic() - self._last_request_time
         if elapsed < _MIN_REQUEST_INTERVAL:
-            time.sleep(_MIN_REQUEST_INTERVAL - elapsed)
+            wait = _MIN_REQUEST_INTERVAL - elapsed
+            logger.debug("Rate-limiting: sleeping %.2fs", wait)
+            time.sleep(wait)
         self._last_request_time = time.monotonic()
 
     def _search_sync(
@@ -43,10 +49,15 @@ class CTClient:
         date_range: Optional[tuple[str, str]] = None,
     ) -> list[dict]:
         """Synchronous search with pagination."""
+        logger.info(
+            "Searching CT.gov: condition=%r, max_results=%d, status=%s, phase=%s, date_range=%s",
+            condition, max_results, status, phase, date_range,
+        )
         max_results = min(max_results, 100)
         all_studies: list[dict] = []
         page_token: Optional[str] = None
         page_size = min(max_results, 100)
+        page_num = 0
 
         params: dict = {
             "query.cond": condition,
@@ -72,12 +83,15 @@ class CTClient:
                 params["pageToken"] = page_token
 
             self._throttle_sync()
+            page_num += 1
+            logger.debug("Fetching page %d from CT.gov", page_num)
             resp = self.session.get(BASE_URL, params=params)
             resp.raise_for_status()
             data = resp.json()
 
             studies = data.get("studies", [])
             all_studies.extend(studies)
+            logger.debug("Page %d returned %d studies (total so far: %d)", page_num, len(studies), len(all_studies))
 
             if len(all_studies) >= max_results:
                 all_studies = all_studies[:max_results]
@@ -87,6 +101,7 @@ class CTClient:
             if not page_token:
                 break
 
+        logger.info("CT.gov search complete: %d studies retrieved in %d pages", len(all_studies), page_num)
         return all_studies
 
     async def search(
@@ -104,6 +119,7 @@ class CTClient:
 
     async def get_study(self, nct_id: str) -> dict:
         """Fetch a single study by NCT ID."""
+        logger.info("Fetching single study: %s", nct_id)
         def _fetch():
             self._throttle_sync()
             resp = self.session.get(f"{BASE_URL}/{nct_id}")

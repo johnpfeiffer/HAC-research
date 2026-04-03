@@ -1,7 +1,11 @@
 """Sortable and filterable trial list component with patient info and KOLs."""
 
+import logging
+
 import streamlit as st
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 def _extract_investigators(raw_json: dict) -> list[dict]:
@@ -30,6 +34,7 @@ def _extract_eligibility(raw_json: dict) -> dict:
 
 def render_trial_table(trials: list[dict], insights: list[dict]):
     """Render a filterable trial table with expandable details."""
+    logger.debug("Rendering trial table: %d trials, %d insights", len(trials), len(insights))
     if not trials:
         st.info("No trials to display.")
         return

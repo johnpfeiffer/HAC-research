@@ -1,12 +1,17 @@
 """Dashboard charts: phase pie, status bar, sponsor table, signal breakdown."""
 
+import logging
+
 import streamlit as st
 import plotly.express as px
 import pandas as pd
 
+logger = logging.getLogger(__name__)
+
 
 def render_dashboard(aggregate: dict, trials: list[dict], insights: list[dict]):
     """Render the full dashboard from aggregate stats."""
+    logger.debug("Rendering dashboard: %d trials, %d insights", len(trials), len(insights))
     if not aggregate:
         st.warning("No data to display.")
         return
