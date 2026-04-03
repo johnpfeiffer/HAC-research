@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """
-ClinicalTrials.gov API Client for querying Stargardt disease trials.
+ClinicalTrials.gov API Client for querying clinical trials by disease.
 """
 
 import requests
 from typing import Optional, Dict, List, Any
 import json
+import argparse
+import re
+import os
 
 
 class ClinicalTrialsClient:
@@ -178,13 +181,42 @@ class ClinicalTrialsClient:
 
 def main():
     """Example usage of the ClinicalTrials client."""
+    parser = argparse.ArgumentParser(
+        description='Search ClinicalTrials.gov for clinical trials by disease condition.'
+    )
+    parser.add_argument(
+        '--disease',
+        type=str,
+        default='Stargardt disease',
+        help='Disease or condition to search for (default: Stargardt disease)'
+    )
+    parser.add_argument(
+        '--status',
+        type=str,
+        default='RECRUITING',
+        help='Filter by study status (e.g., RECRUITING, COMPLETED, ALL) (default: RECRUITING)'
+    )
+    parser.add_argument(
+        '--page-size',
+        type=int,
+        default=5,
+        help='Number of results to retrieve (default: 5)'
+    )
+
+    args = parser.parse_args()
+
     client = ClinicalTrialsClient()
 
-    print("Searching for Stargardt disease clinical trials...")
+    print(f"Searching for {args.disease} clinical trials...")
     print("=" * 80)
 
-    # Search for recruiting trials
-    response = client.search_stargardt(page_size=5, status="RECRUITING")
+    # Search for trials
+    status_filter = None if args.status.upper() == 'ALL' else args.status
+    response = client.search_condition(
+        condition=args.disease,
+        page_size=args.page_size,
+        status=status_filter
+    )
 
     if "error" in response:
         print(f"Error: {response['error']}")
@@ -193,17 +225,21 @@ def main():
     total_count = response.get('totalCount', 0)
     studies = response.get('studies', [])
 
-    print(f"\nTotal Stargardt disease trials found: {total_count}")
-    print(f"Showing first {len(studies)} recruiting trials:\n")
+    status_text = args.status if args.status.upper() != 'ALL' else 'all'
+    print(f"\nTotal {args.disease} trials found: {total_count}")
+    print(f"Showing first {len(studies)} {status_text} trials:\n")
 
     for study in studies:
         client.print_study_summary(study)
 
-    # Save results to file
-    with open('stargardt_trials.json', 'w') as f:
+    # Save results to file with disease name in SAVED subdirectory
+    os.makedirs('SAVED', exist_ok=True)
+    safe_disease_name = re.sub(r'[^a-z0-9]+', '_', args.disease.lower()).strip('_')
+    filename = os.path.join('SAVED', f"{safe_disease_name}_trials.json")
+    with open(filename, 'w') as f:
         json.dump(response, f, indent=2)
 
-    print(f"\nFull results saved to stargardt_trials.json")
+    print(f"\nFull results saved to {filename}")
 
 
 if __name__ == "__main__":
