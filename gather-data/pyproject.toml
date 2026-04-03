@@ -1,0 +1,12 @@
+[project]
+name = "data-gather"
+version = "0.1.0"
+description = "ClinicalTrials.gov API client for querying Stargardt disease trials"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "requests>=2.33.1",
+]
+
+[project.scripts]
+data-gather = "main:main"
